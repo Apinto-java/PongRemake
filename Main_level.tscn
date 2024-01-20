@@ -1,0 +1,133 @@
+[gd_scene load_steps=18 format=3 uid="uid://c7pta4byqirru"]
+
+[ext_resource type="PackedScene" uid="uid://b85di4k1r4amx" path="res://Paddle.tscn" id="1_jhynx"]
+[ext_resource type="Script" path="res://scripts/Objects/MainLevel.cs" id="1_tnim5"]
+[ext_resource type="PackedScene" uid="uid://bauftbc1ecmd0" path="res://Horizontal_Wall.tscn" id="2_6elm8"]
+[ext_resource type="PackedScene" uid="uid://c4bbcr0ypoy6c" path="res://Ball.tscn" id="4_qc76p"]
+[ext_resource type="PackedScene" uid="uid://c8otp47pjmtat" path="res://MiddleDottedLine.tscn" id="5_b23sd"]
+[ext_resource type="PackedScene" uid="uid://lfnjmuxdbutf" path="res://HUD.tscn" id="6_xoa4e"]
+[ext_resource type="AudioStream" uid="uid://edy8yr3ca1pu" path="res://audio/paddle_hit_1.mp3" id="7_stel5"]
+[ext_resource type="AudioStream" uid="uid://dhpftfy3rulmj" path="res://audio/paddle_hit_2.mp3" id="8_754ly"]
+[ext_resource type="AudioStream" uid="uid://bv47crp1osxjo" path="res://audio/paddle_hit_3_1.mp3" id="9_sjka0"]
+[ext_resource type="AudioStream" uid="uid://cn883nvrhjtek" path="res://audio/paddle_hit_4.mp3" id="10_lpx2b"]
+[ext_resource type="AudioStream" uid="uid://djeuy6crt4hot" path="res://audio/paddle_hit_5.mp3" id="11_ojxht"]
+[ext_resource type="AudioStream" uid="uid://c4hkdrmb1371o" path="res://audio/paddle_hit_6.mp3" id="12_gq1al"]
+[ext_resource type="AudioStream" uid="uid://beb6ymkdhnv6h" path="res://audio/goal.mp3" id="13_wir76"]
+[ext_resource type="AudioStream" uid="uid://27fjtwxg1ad6" path="res://audio/win_lose_3.mp3" id="14_reesi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aixdm"]
+size = Vector2(20, 600)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyn37"]
+size = Vector2(20, 600)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gayl1"]
+streams_count = 6
+stream_0/stream = ExtResource("7_stel5")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("8_754ly")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("9_sjka0")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("10_lpx2b")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("11_ojxht")
+stream_4/weight = 1.0
+stream_5/stream = ExtResource("12_gq1al")
+stream_5/weight = 1.0
+
+[node name="MainLevel" type="Node2D"]
+script = ExtResource("1_tnim5")
+
+[node name="HUD" parent="." instance=ExtResource("6_xoa4e")]
+offset_right = 800.0
+offset_bottom = 600.0
+
+[node name="Misc" type="Node" parent="."]
+
+[node name="MiddleDottedLine" parent="Misc" instance=ExtResource("5_b23sd")]
+position = Vector2(400, 0)
+
+[node name="Background" type="ColorRect" parent="Misc"]
+z_index = -1000
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0, 0, 0, 1)
+
+[node name="StartTimer" type="Timer" parent="Misc"]
+one_shot = true
+
+[node name="RestartTimer" type="Timer" parent="Misc"]
+wait_time = 3.0
+one_shot = true
+
+[node name="Player" parent="." instance=ExtResource("1_jhynx")]
+position = Vector2(45, 300)
+MovementSpeedByKeyOrJoystick = 400.0
+
+[node name="Opponent" parent="." instance=ExtResource("1_jhynx")]
+position = Vector2(755, 300)
+
+[node name="Ball" parent="." instance=ExtResource("4_qc76p")]
+z_index = 1
+position = Vector2(400, 300)
+
+[node name="Walls" type="Node" parent="."]
+
+[node name="TopWall" parent="Walls" instance=ExtResource("2_6elm8")]
+visible = false
+position = Vector2(400, -5)
+scale = Vector2(800, 10)
+
+[node name="LeftWall" parent="Walls" instance=ExtResource("2_6elm8")]
+visible = false
+position = Vector2(-5, 300)
+rotation = 1.5708
+scale = Vector2(600, 10)
+
+[node name="RightWall" parent="Walls" instance=ExtResource("2_6elm8")]
+visible = false
+position = Vector2(805, 300)
+rotation = 1.5708
+scale = Vector2(600, 10)
+
+[node name="BottomWall" parent="Walls" instance=ExtResource("2_6elm8")]
+visible = false
+position = Vector2(400, 605)
+scale = Vector2(800, 10)
+
+[node name="Zones" type="Node" parent="."]
+
+[node name="PlayerZone" type="Area2D" parent="Zones"]
+position = Vector2(10, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/PlayerZone"]
+shape = SubResource("RectangleShape2D_aixdm")
+
+[node name="OpponentZone" type="Area2D" parent="Zones"]
+position = Vector2(790, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/OpponentZone"]
+shape = SubResource("RectangleShape2D_oyn37")
+
+[node name="Spawns" type="Node" parent="."]
+
+[node name="BallSpawn" type="Marker2D" parent="Spawns"]
+position = Vector2(400, 300)
+
+[node name="PlayerSpawn" type="Marker2D" parent="Spawns"]
+position = Vector2(45, 300)
+
+[node name="OpponentSpawn" type="Marker2D" parent="Spawns"]
+position = Vector2(755, 300)
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="PaddleHit" type="AudioStreamPlayer" parent="Sounds"]
+stream = SubResource("AudioStreamRandomizer_gayl1")
+
+[node name="GoalSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_wir76")
+
+[node name="StartGameSound" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("14_reesi")

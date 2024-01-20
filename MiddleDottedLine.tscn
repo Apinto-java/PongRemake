@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8otp47pjmtat"]
+
+[ext_resource type="Script" path="res://scripts/Objects/MiddleDottedLine.cs" id="1_1lp61"]
+
+[node name="MiddleDottedLine" type="Node2D"]
+script = ExtResource("1_1lp61")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bauftbc1ecmd0"]
+
+[sub_resource type="Gradient" id="Gradient_e1x32"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sd7ny"]
+gradient = SubResource("Gradient_e1x32")
+width = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bjiry"]
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture1D_sd7ny")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.05, 0.05)
+shape = SubResource("RectangleShape2D_bjiry")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
