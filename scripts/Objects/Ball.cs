@@ -60,19 +60,55 @@ public partial class Ball : CharacterBody2D, IStartable, IStoppable
 		// If the ball collided with something
 		var collider = collision.GetCollider() as Node;
 
-		if(collider != null && collider is Paddle){
+		if(collider != null && collider is Paddle paddle){
 			EmitSignal(SignalName.BallHitPaddle);
+
+			var collisionPosition = collision.GetPosition();
+			var paddlePosition = paddle.GlobalPosition;
+			// 	If hit == 1, it's a low hit, if hit == -1 it's a high hit, and if hit == 0 it's a center hit
+			var hit = collisionPosition.Y <= paddle.Position.Y + Radius && collisionPosition.Y >= paddle.Position.Y - Radius ? 0 :
+						collisionPosition.Y > paddle.Position.Y + Radius ? 1 : -1;
+			
+			Vector2 bouncedVelocity = new Vector2(-Velocity.X, 0);
+			if(hit == 0)
+				GD.Print("Center");
+
+			if(hit == 1)
+			{
+				GD.Print("Low");
+				bouncedVelocity.Y = Mathf.Abs(Velocity.Y);
+			}
+
+			if(hit == -1)
+			{
+				GD.Print("High");
+				bouncedVelocity.Y = Math.Abs(Velocity.Y) * -1;
+			}
+
+			if(Velocity.Y == 0 && hit != 0)
+			{
+				GD.Print("Adding variation to the velocity");
+				// If it's a high hit, it should rotate it upwards, if it's a low hit, rotate it downwards
+				var rotation = hit == -1 ? 
+								GD.RandRange(-25, -45) : 
+								GD.RandRange(25, 45);
+				var rotationRadians = Mathf.DegToRad(rotation);
+				var originalBouncedVelocity = bouncedVelocity; //	For debugging purposes
+				bouncedVelocity = bouncedVelocity.Normalized().Rotated(rotationRadians) * Speed;
+				GD.Print("Rotation angle: ", rotation, 
+						", Rotation radians: ", rotationRadians, 
+						", Original velocity: ", Velocity, 
+						", Bounced velocity: ", originalBouncedVelocity,
+						", Bounced Velocity normalized and rotated times speed: ", bouncedVelocity);
+				
+			}
+
+			Velocity = bouncedVelocity;
+			return;
 		}
 
 		// Get the bounced direction (the normal vector of the impact)
 		Vector2 bouncedDirection = Velocity.Bounce(collision.GetNormal());
-		// If the normal is a "straight" bounce, add some variation
-		if(bouncedDirection.Normalized() == Vector2.Left || bouncedDirection.Normalized() == Vector2.Right)
-		{
-			double randomAngle = GD.RandRange(-25.0, 25.0);
-			float randomAngleToRad = (float)Mathf.DegToRad(randomAngle);
-			bouncedDirection = bouncedDirection.Rotated(randomAngleToRad);
-		}
 		Velocity = bouncedDirection;
 	}
 
@@ -89,10 +125,8 @@ public partial class Ball : CharacterBody2D, IStartable, IStoppable
 		initialVector.X = (float)direction;
 		
 		double rotationAngle = 0;
-		if(direction == 1)
-			rotationAngle = GD.RandRange(-25, 25);
-		else
-			rotationAngle = GD.RandRange(-155, -235);
+		rotationAngle = direction == 1 ? GD.RandRange(-25, 25) : GD.RandRange(-155, -235);
+		rotationAngle = Mathf.DegToRad(rotationAngle);
 		GD.Print("Rotation angle: ", rotationAngle);
 		initialVector = initialVector.Rotated((float)rotationAngle);
 		initialVector = initialVector.Normalized();

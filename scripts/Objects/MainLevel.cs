@@ -38,6 +38,8 @@ public partial class MainLevel : Node2D, IStartable
 
 	public override void _Ready()
 	{
+		Input.MouseMode = Input.MouseModeEnum.Hidden;
+
 		// Initializations
 		PlayerSpawn = GetNode<Marker2D>("Spawns/PlayerSpawn");
 		OpponentSpawn = GetNode<Marker2D>("Spawns/OpponentSpawn");

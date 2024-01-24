@@ -16,10 +16,10 @@
 [ext_resource type="AudioStream" uid="uid://27fjtwxg1ad6" path="res://audio/win_lose_3.mp3" id="14_reesi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aixdm"]
-size = Vector2(20, 600)
+size = Vector2(37, 600)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oyn37"]
-size = Vector2(20, 600)
+size = Vector2(37, 600)
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_gayl1"]
 streams_count = 6
@@ -99,13 +99,13 @@ scale = Vector2(800, 10)
 [node name="Zones" type="Node" parent="."]
 
 [node name="PlayerZone" type="Area2D" parent="Zones"]
-position = Vector2(10, 300)
+position = Vector2(18.5, 300)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/PlayerZone"]
 shape = SubResource("RectangleShape2D_aixdm")
 
 [node name="OpponentZone" type="Area2D" parent="Zones"]
-position = Vector2(790, 300)
+position = Vector2(781.5, 300)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Zones/OpponentZone"]
 shape = SubResource("RectangleShape2D_oyn37")
