@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class HUD : Control
+public partial class HUD : CanvasLayer
 {
 	private Label PlayerScore { get; set; }
 	private Label OpponentScore { get; set; }

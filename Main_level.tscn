@@ -40,8 +40,6 @@ stream_5/weight = 1.0
 script = ExtResource("1_tnim5")
 
 [node name="HUD" parent="." instance=ExtResource("6_xoa4e")]
-offset_right = 800.0
-offset_bottom = 600.0
 
 [node name="Misc" type="Node" parent="."]
 

@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://eryae62anmrq"]
+
+[ext_resource type="Theme" uid="uid://cft7x6hppt312" path="res://themes/main_theme.tres" id="1_q0oxf"]
+[ext_resource type="Script" path="res://scripts/UI/PauseMenu.cs" id="1_q76qq"]
+[ext_resource type="StyleBox" uid="uid://btgs70olfxed1" path="res://styles/flat_button_style.tres" id="2_54u6e"]
+[ext_resource type="StyleBox" uid="uid://ct3v34buyusfu" path="res://styles/hover_button_style.tres" id="3_13tmc"]
+[ext_resource type="StyleBox" uid="uid://biwx0aox6vf6g" path="res://styles/pressed_button_style.tres" id="4_gjfiw"]
+[ext_resource type="StyleBox" uid="uid://dby68u2i62vd5" path="res://styles/disabled_button_style.tres" id="5_52jdk"]
+[ext_resource type="StyleBox" uid="uid://leahrm6xjt5t" path="res://styles/focus_button_style.tres" id="6_lxvjo"]
+[ext_resource type="PackedScene" uid="uid://dp5y0r7bi4hyg" path="res://options.tscn" id="7_yxix4"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q76qq")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0.212305, 0.212305, 0.212305, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 600.0
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="OptionsButton" type="Button" parent="CenterContainer/ButtonsContainer"]
+layout_mode = 2
+theme = ExtResource("1_q0oxf")
+theme_override_styles/normal = ExtResource("2_54u6e")
+theme_override_styles/hover = ExtResource("3_13tmc")
+theme_override_styles/pressed = ExtResource("4_gjfiw")
+theme_override_styles/disabled = ExtResource("5_52jdk")
+theme_override_styles/focus = ExtResource("6_lxvjo")
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/ButtonsContainer"]
+layout_mode = 2
+theme = ExtResource("1_q0oxf")
+theme_override_styles/normal = ExtResource("2_54u6e")
+theme_override_styles/hover = ExtResource("3_13tmc")
+theme_override_styles/pressed = ExtResource("4_gjfiw")
+theme_override_styles/disabled = ExtResource("5_52jdk")
+theme_override_styles/focus = ExtResource("6_lxvjo")
+text = "Quit"
+
+[node name="Options" parent="." instance=ExtResource("7_yxix4")]
+visible = false
+layout_mode = 0
